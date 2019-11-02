@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">Movie Catalogue</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_detail_activity">Detail Catalogue</string>
+    <string name="title_movie">Movie</string>
+    <string name="title_tv">Tv Show</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_vote">Vote Average: </string>
+    <string name="title_release_date">Release Date: </string>
+    <string name="title_overview">Overview: </string>
 </resources>
