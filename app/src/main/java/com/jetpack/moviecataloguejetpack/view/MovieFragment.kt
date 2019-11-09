@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_movie.*
  */
 class MovieFragment : Fragment() {
 
-    lateinit var movieList: List<MovieModel>
+    private lateinit var movieList: List<MovieModel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
