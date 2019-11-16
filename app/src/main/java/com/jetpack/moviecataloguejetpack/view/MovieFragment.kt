@@ -44,4 +44,8 @@ class MovieFragment : Fragment() {
             adapter = this@MovieFragment.movieAdapter
         }
     }
+
+    companion object {
+        fun movieInstance() : MovieFragment = MovieFragment()
+    }
 }

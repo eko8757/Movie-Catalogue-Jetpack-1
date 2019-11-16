@@ -44,4 +44,8 @@ class TvFragement : Fragment() {
             adapter = this@TvFragement.tvShowAdapter
         }
     }
+
+    companion object {
+        fun tvInstance() : TvFragement = TvFragement()
+    }
 }
