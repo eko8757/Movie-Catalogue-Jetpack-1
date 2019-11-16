@@ -7,37 +7,58 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jetpack.moviecataloguejetpack.BuildConfig
 import com.jetpack.moviecataloguejetpack.R
-import com.jetpack.moviecataloguejetpack.model.TvModel
+import com.jetpack.moviecataloguejetpack.model.entity.TvModel
 import com.jetpack.moviecataloguejetpack.view.DetailActivity
 import kotlinx.android.synthetic.main.item_list.view.*
 
-class TvAdapter(private val context: Context?, private val listTv: List<TvModel>)
-    : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
+class TvAdapter(private val context: Context) : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
+
+    private var tvList: MutableList<TvModel>? = null
+
+    fun setupTvList(tvShow: MutableList<TvModel>?) {
+        tvList = tvShow
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvViewHolder {
         return TvViewHolder(LayoutInflater.from(context).inflate(R.layout.item_list, parent, false))
     }
 
-    override fun getItemCount(): Int = listTv.size
-
-    override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
-        holder.bindData(listTv[position])
-        context?.let { Glide.with(it).load(listTv[position].tvShowPoster).into(holder.poster) }
-        holder.cardItem.setOnClickListener {
-            val i = Intent(context, DetailActivity::class.java)
-            i.putExtra("tvId", listTv[position].tvShowId)
-            context?.startActivity(i)
+    override fun getItemCount(): Int {
+        return if (tvList != null) {
+            tvList!!.size
+        } else {
+            0
         }
     }
 
-    class TvViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val poster = view.img_card
-        val cardItem = view.cv_item
+    override fun onBindViewHolder(holder: TvViewHolder, position: Int) {
+        val tv = tvList?.get(position)
+        if (tv != null) {
+            holder.bindData(tv)
+        }
+    }
+
+    inner class TvViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        private val title = view.tv_title
+        private val desc = view.tv_desc
+        private val poster = view.img_card
 
         fun bindData(listTv: TvModel) {
-            itemView.tv_title.text = listTv.tvShowTitle
-            itemView.tv_desc.text = listTv.tvShowDescription
+            title.text = listTv.originalName
+            desc.text = listTv.overview
+            Glide.with(context).load(BuildConfig.URL_IMG_APP + listTv.posterPath).into(poster)
+
+            itemView.setOnClickListener {
+                context.startActivity(
+                    Intent(context, DetailActivity::class.java)
+                        .putExtra("dataType", "TV_SHOW")
+                        .putExtra("tvShowID", listTv.idTVShow)
+                )
+            }
         }
     }
 }

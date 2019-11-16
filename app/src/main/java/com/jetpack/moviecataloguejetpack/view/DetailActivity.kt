@@ -2,15 +2,15 @@ package com.jetpack.moviecataloguejetpack.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.jetpack.moviecataloguejetpack.BuildConfig
 import com.jetpack.moviecataloguejetpack.R
-import com.jetpack.moviecataloguejetpack.model.MovieModel
-import com.jetpack.moviecataloguejetpack.model.TvModel
-import com.jetpack.moviecataloguejetpack.viewmodel.MovieViewModel
-import com.jetpack.moviecataloguejetpack.viewmodel.TvViewModel
-import kotlinx.android.synthetic.main.activity_detail.*
+import com.jetpack.moviecataloguejetpack.viewmodel.DetailViewModel
 
 class DetailActivity : AppCompatActivity() {
 
@@ -18,36 +18,40 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        if (intent.getIntExtra("movieId", 0) != 0) {
-            loadDataMovie(movieViewModel.movieDetail(intent.getIntExtra("movieId", 0)))
+        val movieId: String? = intent.getStringExtra("movieID")
+        val tvId: String? = intent.getStringExtra("tvShowID")
+        val type = intent.getStringExtra("dataType")
+        val title : TextView = findViewById(R.id.tv_title_detail)
+        val releaseDate: TextView = findViewById(R.id.tv_release_date)
+        val voteAverage: TextView = findViewById(R.id.tv_vote_average)
+        val desc:TextView = findViewById(R.id.tv_desc_detail)
+        val imageDetail:ImageView = findViewById(R.id.img_detail)
+        val viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
+
+        if (type == "MOVIE") {
+            Log.d("DetailACtivity", movieId)
+            viewModel.getMovieDetailData(movieId)?.observe(this, Observer { movieDetails ->
+                if (movieDetails != null) {
+                    title.text = movieDetails.title
+                    releaseDate.text = movieDetails.releaseDate
+                    voteAverage.text = movieDetails.voteAverage.toString()
+                    desc.text = movieDetails.overview
+                    Glide.with(this).load(BuildConfig.URL_IMG_APP + movieDetails.posterPath).into(imageDetail)
+                }
+
+            })
         } else {
-            loadDataTv(tvShowViewModel.tvShowDetail(intent.getIntExtra("tvId", 0)))
+            Log.d("DetailActivity", tvId)
+            viewModel.getTVDetailData(tvId)?.observe(this, Observer { tvDetails ->
+                if (tvDetails != null) {
+                    title.text = tvDetails.title
+                    releaseDate.text = tvDetails.firstAirDate
+                    voteAverage.text = tvDetails.voteAverage.toString()
+                    desc.text = tvDetails.overview
+                    Glide.with(this).load(BuildConfig.URL_IMG_APP + tvDetails.posterPath).into(imageDetail)
+                }
+            })
         }
     }
 
-    private fun loadDataMovie(movie: MovieModel?) {
-        Glide.with(this).load(movie?.moviePoster).into(img_detail)
-        Glide.with(this).load(movie?.moviePoster).transform(RoundedCorners(8)).into(img_detail)
-        tv_title_detail.text = movie?.movieTitle
-        tv_release_date.text = movie?.movieRelease
-        tv_vote_average.text = movie?.movieRating
-        tv_desc_detail.text = movie?.movieDescription
-    }
-
-    private fun loadDataTv(tv: TvModel?) {
-        Glide.with(this).load(tv?.tvShowPoster).into(img_detail)
-        Glide.with(this).load(tv?.tvShowPoster).transform(RoundedCorners(8)).into(img_detail)
-        tv_title_detail.text = tv?.tvShowTitle
-        tv_release_date.text = tv?.tvShowRelease
-        tv_vote_average.text = tv?.tvShowRating
-        tv_desc_detail.text = tv?.tvShowDescription
-    }
-
-    private val movieViewModel by lazy {
-        ViewModelProviders.of(this).get(MovieViewModel::class.java)
-    }
-
-    private val tvShowViewModel by lazy {
-        ViewModelProviders.of(this).get(TvViewModel::class.java)
-    }
 }

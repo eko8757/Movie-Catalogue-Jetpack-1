@@ -1,36 +1,26 @@
 package com.jetpack.moviecataloguejetpack.services
 
-import com.google.gson.GsonBuilder
+import com.jetpack.moviecataloguejetpack.BuildConfig
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
-class BaseApi {
+object BaseApi {
 
-    companion object {
-        var URL: String = "https://api.themoviedb.org/3/"
-        fun create(): BaseApi {
-            val gson = GsonBuilder()
-                .setLenient()
-                .create()
+    private val interceptor = HttpLoggingInterceptor()
+    private val httpClient = OkHttpClient.Builder()
+    private val builder = Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
 
-            val clientBuilder = OkHttpClient.Builder()
-            clientBuilder.connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .build()
+    fun <S> createService(serviceClass: Class<S>) : S {
+        return createService(serviceClass, null)
+    }
 
-            val client = clientBuilder.build()
-            val retrofit = Retrofit.Builder()
-                .baseUrl(URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(client)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-            return retrofit.create(BaseApi::class.java)
-        }
+    private fun <S> createService(serviceClass: Class<S>, authToken: String?) : S {
+        val client = httpClient.build()
+        val retrofit = builder.client(client).build()
+        return retrofit.create(serviceClass)
     }
 }

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -13,6 +14,12 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+        buildConfigField "String", "BASE_URL_POSTER", "\"https://image.tmdb.org/\""
+        buildConfigField "String", "URL_IMG_APP_92", "\"https://image.tmdb.org/t/p/w92/\""
+        buildConfigField "String", "URL_IMG_APP", "\"https://image.tmdb.org/t/p/w185/\""
+        buildConfigField "String", "API_V3_KEY", "\"e1c6110868d89666f3f7ddda01910da7\""
+        buildConfigField "String", "API_V4_KEY", "\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlMWM2MTEwODY4ZDg5NjY2ZjNmN2RkZGEwMTkxMGRhNyIsInN1YiI6IjVkMTBmMGEzMGUwYTI2MDJhMWQwNTEwZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.IarHoEmQytnHnPK07Ihzlm7jmwKW3vyfgUXV8aY0-Qc\""
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -25,12 +32,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "MOVIE_API_KEY", "\"e1c6110868d89666f3f7ddda01910da7\""
-            buildConfigField "String", "MOVIE_PATH", "\"https://image.tmdb.org/t/p/w500/\""
-        }
-        debug {
-            buildConfigField "String", "MOVIE_API_KEY", "\"e1c6110868d89666f3f7ddda01910da7\""
-            buildConfigField "String", "MOVIE_PATH", "\"https://image.tmdb.org/t/p/w500/\""
         }
     }
 
@@ -60,6 +61,11 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$adapter_rxJava"
     implementation "com.squareup.retrofit2:converter-gson:$converter_gson"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    implementation 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     //test
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
