@@ -8,17 +8,22 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.jetpack.moviecataloguejetpack.BuildConfig
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.viewmodel.DetailViewModel
+import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
+
+    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        shimmerFrameLayout = detail_shimer
         val movieId: String? = intent.getStringExtra("movieID")
         val tvId: String? = intent.getStringExtra("tvShowID")
         val type = intent.getStringExtra("dataType")
@@ -40,6 +45,7 @@ class DetailActivity : AppCompatActivity() {
                     desc.text = movieDetails.overview
                     Glide.with(this).load(BuildConfig.URL_IMG_APP + movieDetails.posterPath).into(imageDetail)
                 }
+                shimmerFrameLayout.hideShimmer()
 
                 if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
 
@@ -55,6 +61,7 @@ class DetailActivity : AppCompatActivity() {
                     desc.text = tvDetails.overview
                     Glide.with(this).load(BuildConfig.URL_IMG_APP + tvDetails.posterPath).into(imageDetail)
                 }
+                shimmerFrameLayout.hideShimmer()
 
                 if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
             })
