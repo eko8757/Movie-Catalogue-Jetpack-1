@@ -71,9 +71,4 @@ class MovieFragment : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         })
     }
-
-
-    companion object {
-        fun movieInstance() : MovieFragment = MovieFragment()
-    }
 }

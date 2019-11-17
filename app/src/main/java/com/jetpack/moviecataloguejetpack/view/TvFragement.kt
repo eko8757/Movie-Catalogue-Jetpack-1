@@ -67,8 +67,4 @@ class TvFragement : Fragment() {
             swipeRefreshLayout.isRefreshing = false
         })
     }
-
-    companion object {
-        fun tvInstance() : TvFragement = TvFragement()
-    }
 }
