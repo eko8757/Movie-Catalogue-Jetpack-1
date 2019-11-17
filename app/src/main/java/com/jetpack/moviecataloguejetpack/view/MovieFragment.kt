@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.adapter.MovieAdapter
 import com.jetpack.moviecataloguejetpack.model.entity.MovieModel
+import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.utils.invisible
 import com.jetpack.moviecataloguejetpack.utils.visible
 import com.jetpack.moviecataloguejetpack.viewmodel.MainViewModel
@@ -57,6 +58,7 @@ class MovieFragment : Fragment() {
     }
 
     private fun observeData(viewModel: MainViewModel, adapter: MovieAdapter) {
+        EspressoIdleResource.increment()
         viewModel.getMovieList()?.observe(this, Observer<MutableList<MovieModel>> {
             if (it != null) {
                 adapter.setupMovieList(it)
@@ -65,6 +67,7 @@ class MovieFragment : Fragment() {
             }
 
             progressBar.invisible()
+            if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
             swipeRefreshLayout.isRefreshing = false
         })
     }

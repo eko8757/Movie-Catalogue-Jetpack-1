@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.jetpack.moviecataloguejetpack.BuildConfig
 import com.jetpack.moviecataloguejetpack.R
+import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.viewmodel.DetailViewModel
 
 class DetailActivity : AppCompatActivity() {
@@ -29,7 +30,8 @@ class DetailActivity : AppCompatActivity() {
         val viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
 
         if (type == "MOVIE") {
-            Log.d("DetailACtivity", movieId)
+            Log.d("DetailActivity", movieId)
+            EspressoIdleResource.increment()
             viewModel.getMovieDetailData(movieId)?.observe(this, Observer { movieDetails ->
                 if (movieDetails != null) {
                     title.text = movieDetails.title
@@ -39,9 +41,12 @@ class DetailActivity : AppCompatActivity() {
                     Glide.with(this).load(BuildConfig.URL_IMG_APP + movieDetails.posterPath).into(imageDetail)
                 }
 
+                if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
+
             })
         } else {
             Log.d("DetailActivity", tvId)
+            EspressoIdleResource.increment()
             viewModel.getTVDetailData(tvId)?.observe(this, Observer { tvDetails ->
                 if (tvDetails != null) {
                     title.text = tvDetails.title
@@ -50,6 +55,8 @@ class DetailActivity : AppCompatActivity() {
                     desc.text = tvDetails.overview
                     Glide.with(this).load(BuildConfig.URL_IMG_APP + tvDetails.posterPath).into(imageDetail)
                 }
+
+                if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
             })
         }
     }

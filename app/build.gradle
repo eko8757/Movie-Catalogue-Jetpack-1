@@ -70,11 +70,27 @@ dependencies {
     //test
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "androidx.test:rules:$rulesVersion"
     androidTestImplementation "androidx.test:runner:$runner"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+
+    //espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+
+    //mockito
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-core:$mockitoVersion"
     androidTestImplementation "org.mockito:mockito-android:$mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: "$mockitoVersion"
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    testImplementation("androidx.arch.core:core-testing:$lifecycle_version"){
+        exclude group: 'org.mockito', module: 'mockito-core'
+    }
+    androidTestImplementation("androidx.arch.core:core-testing:$lifecycle_version") {
+        exclude group: 'org.mockito', module: 'mockito-core'
+    }
 }

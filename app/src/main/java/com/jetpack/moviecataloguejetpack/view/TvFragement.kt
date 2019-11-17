@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.adapter.TvAdapter
 import com.jetpack.moviecataloguejetpack.model.entity.TvModel
+import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.utils.invisible
 import com.jetpack.moviecataloguejetpack.utils.visible
 import com.jetpack.moviecataloguejetpack.viewmodel.MainViewModel
@@ -56,11 +57,13 @@ class TvFragement : Fragment() {
     }
 
     private fun observeData(viewModel: MainViewModel, adapter: TvAdapter) {
+        EspressoIdleResource.increment()
         viewModel.getTvList()?.observe(this, Observer<MutableList<TvModel>> {
             if (it != null) {
                 adapter.setupTvList(it)
             }
             progressBar.invisible()
+            if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
             swipeRefreshLayout.isRefreshing = false
         })
     }
