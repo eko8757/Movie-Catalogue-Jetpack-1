@@ -1,6 +1,5 @@
 package com.jetpack.moviecataloguejetpack.view
 
-import android.os.SystemClock
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
@@ -26,7 +25,7 @@ class MainActivityTest {
 
     @Rule
     @JvmField
-    var mainAcrivityTestRule = ActivityTestRule(MainActivity::class.java)
+    var mainActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Before
     fun setUp() {
@@ -48,17 +47,12 @@ class MainActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.viewPager_main)).perform(ViewActions.swipeLeft())
         val matcher = allOf(ViewMatchers.withText("MOVIE"), ViewMatchers.isDescendantOfA(ViewMatchers.withId(R.id.tab_main)))
         Espresso.onView(matcher).perform(ViewActions.click())
-        SystemClock.sleep(800)
     }
 
     @Test
     fun testRecyclerMovieBehaviour() {
         Espresso.onView(allOf(ViewMatchers.isDisplayed(), ViewMatchers.withId(R.id.rv_movie)))
             .perform(RecyclerViewActions.actionOnItemAtPosition<MovieAdapter.MovieViewHolder>(0, ViewActions.click()))
-        Thread.sleep(3000)
-
-        Espresso.pressBack()
-        Thread.sleep(3000)
     }
 
     @Test
@@ -68,9 +62,5 @@ class MainActivityTest {
 
         Espresso.onView(allOf(ViewMatchers.isDisplayed(), ViewMatchers.withId(R.id.rv_tv)))
             .perform(RecyclerViewActions.actionOnItemAtPosition<TvAdapter.TvViewHolder>(4, ViewActions.click()))
-        Thread.sleep(3000)
-
-        Espresso.pressBack()
-        Thread.sleep(3000)
     }
 }
