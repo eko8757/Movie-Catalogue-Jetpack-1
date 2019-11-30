@@ -53,9 +53,18 @@ dependencies {
     implementation "androidx.navigation:navigation-ui:$navigationVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
+
+    //lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    //room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
     // service
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
@@ -87,7 +96,7 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation group: 'org.mockito', name: 'mockito-core', version: "$mockitoVersion"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
-    testImplementation("androidx.arch.core:core-testing:$lifecycle_version"){
+    testImplementation("androidx.arch.core:core-testing:$lifecycle_version") {
         exclude group: 'org.mockito', module: 'mockito-core'
     }
     androidTestImplementation("androidx.arch.core:core-testing:$lifecycle_version") {
