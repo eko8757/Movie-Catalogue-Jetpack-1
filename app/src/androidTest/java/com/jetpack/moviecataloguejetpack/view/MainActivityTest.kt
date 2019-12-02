@@ -12,6 +12,7 @@ import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.adapter.MovieAdapter
 import com.jetpack.moviecataloguejetpack.adapter.TvAdapter
 import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
+import com.jetpack.moviecataloguejetpack.view.activity.MainActivity
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before

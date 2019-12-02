@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.DetailActivity"
+        <activity android:name=".view.activity.DetailActivity"
             android:label="@string/title_detail_activity"
-            android:parentActivityName=".view.MainActivity"/>
+            android:parentActivityName=".view.activity.MainActivity"/>
         <activity
-            android:name=".view.MainActivity">
+            android:name=".view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

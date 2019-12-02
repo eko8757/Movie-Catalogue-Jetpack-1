@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:fillViewport="true"
-    tools:context=".view.DetailActivity">
+    tools:context=".view.activity.DetailActivity">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/detail_shimer"

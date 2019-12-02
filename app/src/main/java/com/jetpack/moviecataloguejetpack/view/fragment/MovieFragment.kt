@@ -1,6 +1,7 @@
-package com.jetpack.moviecataloguejetpack.view
+package com.jetpack.moviecataloguejetpack.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jetpack.moviecataloguejetpack.R
-import com.jetpack.moviecataloguejetpack.adapter.TvAdapter
-import com.jetpack.moviecataloguejetpack.model.entity.TvModel
+import com.jetpack.moviecataloguejetpack.adapter.MovieAdapter
+import com.jetpack.moviecataloguejetpack.model.entity.MovieModel
 import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.utils.invisible
 import com.jetpack.moviecataloguejetpack.utils.visible
@@ -22,7 +23,7 @@ import com.jetpack.moviecataloguejetpack.viewmodel.MainViewModel
 /**
  * A simple [Fragment] subclass.
  */
-class TvFragement : Fragment() {
+class MovieFragment : Fragment() {
 
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
@@ -33,20 +34,20 @@ class TvFragement : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tv, container, false)
+        return inflater.inflate(R.layout.fragment_movie, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView = view.findViewById(R.id.rv_tv)
-        progressBar = view.findViewById(R.id.progress_tv)
-        swipeRefreshLayout = view.findViewById(R.id.swipe_tv)
+        recyclerView = view.findViewById(R.id.rv_movie)
+        progressBar = view.findViewById(R.id.progress_movie)
+        swipeRefreshLayout = view.findViewById(R.id.swipe_movie)
 
         progressBar.visible()
 
         val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        val adapter = TvAdapter(activity!!)
+        val adapter = MovieAdapter(activity!!)
         recyclerView.layoutManager = LinearLayoutManager(activity!!)
         recyclerView.adapter = adapter
 
@@ -56,12 +57,15 @@ class TvFragement : Fragment() {
         }
     }
 
-    private fun observeData(viewModel: MainViewModel, adapter: TvAdapter) {
+    private fun observeData(viewModel: MainViewModel, adapter: MovieAdapter) {
         EspressoIdleResource.increment()
-        viewModel.getTvList()?.observe(this, Observer<MutableList<TvModel>> {
+        viewModel.getMovieList()?.observe(this, Observer<MutableList<MovieModel>> {
             if (it != null) {
-                adapter.setupTvList(it)
+                adapter.setupMovieList(it)
+            } else {
+                Log.e("MovieFragment", "NULL")
             }
+
             progressBar.invisible()
             if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
             swipeRefreshLayout.isRefreshing = false

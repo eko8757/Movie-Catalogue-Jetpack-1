@@ -1,4 +1,4 @@
-package com.jetpack.moviecataloguejetpack.view
+package com.jetpack.moviecataloguejetpack.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

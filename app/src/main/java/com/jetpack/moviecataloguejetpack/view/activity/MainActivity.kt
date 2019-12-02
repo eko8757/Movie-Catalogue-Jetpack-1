@@ -1,15 +1,18 @@
-package com.jetpack.moviecataloguejetpack.view
+package com.jetpack.moviecataloguejetpack.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jetpack.moviecataloguejetpack.R
-import com.jetpack.moviecataloguejetpack.adapter.PagerAdapter
+import com.jetpack.moviecataloguejetpack.utils.BottomNavigationViewListener
+import com.jetpack.moviecataloguejetpack.view.fragment.favorite.FavoriteFragment
+import com.jetpack.moviecataloguejetpack.view.fragment.MovieFragment
+import com.jetpack.moviecataloguejetpack.view.fragment.TvFragement
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), BottomNavigationViewListener {
+class MainActivity : AppCompatActivity(),
+    BottomNavigationViewListener {
 
     private lateinit var fragment: Fragment
     private lateinit var fragmentManager: FragmentManager
@@ -20,14 +23,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationViewListener {
 
         main_bottom_navigation.inflateMenu(R.menu.bottom_nav_menu)
         fragmentManager = supportFragmentManager
-        fragmentManager.beginTransaction().replace(R.id.main_container, MovieFragment()).commit()
+        fragmentManager.beginTransaction().replace(R.id.main_container,
+            MovieFragment()
+        ).commit()
 
         main_bottom_navigation.setOnNavigationItemSelectedListener {
             val id = it.itemId
             when (id) {
-                R.id.navigation_movie -> fragment = MovieFragment()
-                R.id.navigation_tv -> fragment = TvFragement()
-                R.id.navigation_favorite -> fragment = FavoriteFragment()
+                R.id.navigation_movie -> fragment =
+                    MovieFragment()
+                R.id.navigation_tv -> fragment =
+                    TvFragement()
+                R.id.navigation_favorite -> fragment =
+                    FavoriteFragment()
             }
 
             val transaction = fragmentManager.beginTransaction()

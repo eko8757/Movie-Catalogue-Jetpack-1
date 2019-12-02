@@ -1,4 +1,4 @@
-package com.jetpack.moviecataloguejetpack.view
+package com.jetpack.moviecataloguejetpack.utils
 
 interface BottomNavigationViewListener {
     fun hideBottomNavigationView()

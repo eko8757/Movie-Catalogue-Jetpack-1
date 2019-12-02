@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.jetpack.moviecataloguejetpack.BuildConfig
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.model.entity.TvModel
-import com.jetpack.moviecataloguejetpack.view.DetailActivity
+import com.jetpack.moviecataloguejetpack.view.activity.DetailActivity
 import kotlinx.android.synthetic.main.item_list.view.*
 
 class TvAdapter(private val context: Context) : RecyclerView.Adapter<TvAdapter.TvViewHolder>() {
