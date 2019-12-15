@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.utils.BottomNavigationViewListener
-import com.jetpack.moviecataloguejetpack.view.fragment.favorite.FavoriteFragment
+import com.jetpack.moviecataloguejetpack.view.fragment.FavoriteFragment
 import com.jetpack.moviecataloguejetpack.view.fragment.MovieFragment
 import com.jetpack.moviecataloguejetpack.view.fragment.TvFragement
 import kotlinx.android.synthetic.main.activity_main.*
