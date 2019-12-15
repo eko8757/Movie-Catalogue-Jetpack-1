@@ -3,8 +3,12 @@ package com.jetpack.moviecataloguejetpack.view.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -18,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_detail.*
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var shimmerFrameLayout: ShimmerFrameLayout
+    private var isFavorite : Boolean = false
+    private var menuItem : Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +72,47 @@ class DetailActivity : AppCompatActivity() {
                 if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
             })
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.favorite_menu, menu)
+        menuItem = menu
+        setFavorite()
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+
+            R.id.action_favorite -> {
+                if (isFavorite) removeFromFavorite() else addToFavorite()
+                isFavorite = !isFavorite
+                setFavorite()
+                Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show()
+                true
+            } else -> {
+                return super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    private fun setFavorite() {
+        if (isFavorite) {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_black_24dp)
+        } else {
+            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_black_24dp)
+        }
+    }
+
+    private fun removeFromFavorite(){
+
+    }
+    private fun addToFavorite(){
+
     }
 
 }

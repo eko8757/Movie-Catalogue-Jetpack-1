@@ -1,4 +1,4 @@
-package com.jetpack.moviecataloguejetpack.view.fragment
+package com.jetpack.moviecataloguejetpack.view.fragment.favorite
 
 
 import android.os.Bundle
@@ -11,7 +11,8 @@ import com.google.android.material.tabs.TabLayout
 
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.adapter.PagerAdapter
-import kotlinx.android.synthetic.main.fragment_favorite.*
+import com.jetpack.moviecataloguejetpack.view.fragment.MovieFragment
+import com.jetpack.moviecataloguejetpack.view.fragment.TvFragement
 
 /**
  * A simple [Fragment] subclass.
@@ -29,8 +30,8 @@ class FavoriteFragment : Fragment() {
         val tab = rootView.findViewById<TabLayout>(R.id.tab_favorite)
 
         //set view pager & tab layout
-        adapter.addFragment(MovieFragment(), "Movies")
-        adapter.addFragment(TvFragement(), "Tv Show")
+        adapter.addFragment(FavoriteMovieFragment(), "Movies")
+        adapter.addFragment(FavoriteTvFragment(), "Tv Show")
         viewPager.adapter = adapter
         tab.setupWithViewPager(viewPager)
         return rootView
