@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jetpack.moviecataloguejetpack.BuildConfig
 import com.jetpack.moviecataloguejetpack.R
-import com.jetpack.moviecataloguejetpack.model.entity.MovieModel
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieModel
 import com.jetpack.moviecataloguejetpack.view.activity.DetailActivity
 import kotlinx.android.synthetic.main.item_list.view.*
 

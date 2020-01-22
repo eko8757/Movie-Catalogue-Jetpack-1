@@ -1,14 +1,9 @@
-package com.jetpack.moviecataloguejetpack.model.entity
+package com.jetpack.moviecataloguejetpack.model.entity.tv
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-
-data class TvData(
-    @SerializedName("results")
-    val tvList: MutableList<TvModel>?
-)
 
 @Entity(tableName = "tvshow")
 data class TvModel(
@@ -30,13 +25,4 @@ data class TvModel(
 
     @ColumnInfo(name = "poster_path")
     @SerializedName("poster_path") val posterPath: String?
-)
-
-data class TVShowDetail(
-    @SerializedName("id") val idMovie: String?,
-    @SerializedName("name") val title: String?,
-    @SerializedName("overview") val overview: String?,
-    @SerializedName("poster_path") val posterPath: String?,
-    @SerializedName("first_air_date") val firstAirDate: String?,
-    @SerializedName("vote_average") val voteAverage: Double?
 )

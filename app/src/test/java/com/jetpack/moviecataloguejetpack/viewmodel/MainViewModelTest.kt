@@ -3,21 +3,17 @@ package com.jetpack.moviecataloguejetpack.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.jetpack.moviecataloguejetpack.model.entity.MovieModel
-import com.jetpack.moviecataloguejetpack.model.entity.TvModel
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieModel
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TvModel
 import com.jetpack.moviecataloguejetpack.repositories.MainRepositories
-import com.jetpack.moviecataloguejetpack.utils.getOrAwaitValue
-import org.junit.Assert
 import org.junit.Before
 
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
-import java.math.BigInteger
 
 class MainViewModelTest {
 
@@ -39,14 +35,15 @@ class MainViewModelTest {
     @Test
     fun getMovieList() {
         val mainViewModel = Mockito.mock(MainViewModel::class.java)
-        val dummyMovie = MovieModel(
-            "475557",
-            "Joker",
-            "2019-10-02",
-            8.4,
-            "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
-            "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
-        )
+        val dummyMovie =
+            MovieModel(
+                "475557",
+                "Joker",
+                "2019-10-02",
+                8.4,
+                "During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure.",
+                "/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
+            )
 
         val movieDummy: MutableLiveData<MutableList<MovieModel>> = MutableLiveData()
         val movieDummyList: MutableList<MovieModel> = mutableListOf()

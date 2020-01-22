@@ -3,8 +3,8 @@ package com.jetpack.moviecataloguejetpack.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jetpack.moviecataloguejetpack.repositories.MainRepositories
-import com.jetpack.moviecataloguejetpack.model.entity.MovieDetail
-import com.jetpack.moviecataloguejetpack.model.entity.TVShowDetail
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieDetail
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TVShowDetail
 
 class DetailViewModel : ViewModel() {
     private val repository = MainRepositories()

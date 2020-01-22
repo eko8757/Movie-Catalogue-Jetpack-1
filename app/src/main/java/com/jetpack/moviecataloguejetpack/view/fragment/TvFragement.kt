@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.adapter.TvAdapter
-import com.jetpack.moviecataloguejetpack.model.entity.TvModel
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TvModel
 import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.utils.invisible
 import com.jetpack.moviecataloguejetpack.utils.visible

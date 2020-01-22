@@ -1,9 +1,9 @@
 package com.jetpack.moviecataloguejetpack.model.network
 
-import com.jetpack.moviecataloguejetpack.model.entity.MovieData
-import com.jetpack.moviecataloguejetpack.model.entity.MovieDetail
-import com.jetpack.moviecataloguejetpack.model.entity.TVShowDetail
-import com.jetpack.moviecataloguejetpack.model.entity.TvData
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieData
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieDetail
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TVShowDetail
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TvData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

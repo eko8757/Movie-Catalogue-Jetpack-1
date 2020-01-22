@@ -2,7 +2,12 @@ package com.jetpack.moviecataloguejetpack.repositories
 
 import androidx.lifecycle.MutableLiveData
 import com.jetpack.moviecataloguejetpack.BuildConfig
-import com.jetpack.moviecataloguejetpack.model.entity.*
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieData
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieDetail
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieModel
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TVShowDetail
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TvData
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TvModel
 import com.jetpack.moviecataloguejetpack.model.network.ApiMovie
 import com.jetpack.moviecataloguejetpack.services.BaseApi
 import retrofit2.Call

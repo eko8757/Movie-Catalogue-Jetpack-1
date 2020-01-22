@@ -15,15 +15,24 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.jetpack.moviecataloguejetpack.BuildConfig
 import com.jetpack.moviecataloguejetpack.R
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieDetail
+import com.jetpack.moviecataloguejetpack.model.entity.tv.TVShowDetail
 import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.viewmodel.DetailViewModel
+import com.jetpack.moviecataloguejetpack.viewmodel.FavoriteViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var shimmerFrameLayout: ShimmerFrameLayout
-    private var isFavorite : Boolean = false
-    private var menuItem : Menu? = null
+    private lateinit var favoriteViewModel: FavoriteViewModel
+    private var movieDetail: MovieDetail? = null
+    private var tvDetail: TVShowDetail? = null
+    private var isFavorite: Boolean = false
+    private var menuItem: Menu? = null
+    private var type: String? = null
+    private val TYPE_MOVIE = "MOVIE"
+    private val TYPE_TV = "TV_SHOW"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +41,12 @@ class DetailActivity : AppCompatActivity() {
         shimmerFrameLayout = detail_shimer
         val movieId: String? = intent.getStringExtra("movieID")
         val tvId: String? = intent.getStringExtra("tvShowID")
-        val type = intent.getStringExtra("dataType")
-        val title : TextView = findViewById(R.id.tv_title_detail)
+        type = intent.getStringExtra("dataType")
+        val title: TextView = findViewById(R.id.tv_title_detail)
         val releaseDate: TextView = findViewById(R.id.tv_release_date)
         val voteAverage: TextView = findViewById(R.id.tv_vote_average)
-        val desc:TextView = findViewById(R.id.tv_desc_detail)
-        val imageDetail:ImageView = findViewById(R.id.img_detail)
+        val desc: TextView = findViewById(R.id.tv_desc_detail)
+        val imageDetail: ImageView = findViewById(R.id.img_detail)
         val viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
 
         if (type == "MOVIE") {
@@ -49,13 +58,18 @@ class DetailActivity : AppCompatActivity() {
                     releaseDate.text = movieDetails.releaseDate
                     voteAverage.text = movieDetails.voteAverage.toString()
                     desc.text = movieDetails.overview
-                    Glide.with(this).load(BuildConfig.URL_IMG_APP + movieDetails.posterPath).into(imageDetail)
+                    Glide.with(this).load(BuildConfig.URL_IMG_APP + movieDetails.posterPath)
+                        .into(imageDetail)
                 }
                 shimmerFrameLayout.hideShimmer()
 
                 if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
-
             })
+
+            if (movieId != null) {
+                checkFavorite(movieId)
+            }
+
         } else {
             Log.d("DetailActivity", tvId)
             EspressoIdleResource.increment()
@@ -65,12 +79,17 @@ class DetailActivity : AppCompatActivity() {
                     releaseDate.text = tvDetails.firstAirDate
                     voteAverage.text = tvDetails.voteAverage.toString()
                     desc.text = tvDetails.overview
-                    Glide.with(this).load(BuildConfig.URL_IMG_APP + tvDetails.posterPath).into(imageDetail)
+                    Glide.with(this).load(BuildConfig.URL_IMG_APP + tvDetails.posterPath)
+                        .into(imageDetail)
                 }
                 shimmerFrameLayout.hideShimmer()
 
                 if (!EspressoIdleResource.getEspressoIdleResource().isIdleNow) EspressoIdleResource.decrement()
             })
+
+            if (tvId != null) {
+                checkFavorite(tvId)
+            }
         }
     }
 
@@ -94,7 +113,8 @@ class DetailActivity : AppCompatActivity() {
                 setFavorite()
                 Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show()
                 true
-            } else -> {
+            }
+            else -> {
                 return super.onOptionsItemSelected(item)
             }
         }
@@ -102,17 +122,69 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setFavorite() {
         if (isFavorite) {
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_black_24dp)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(this, R.drawable.ic_favorite_black_24dp)
         } else {
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_black_24dp)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(this, R.drawable.ic_favorite_border_black_24dp)
         }
     }
 
-    private fun removeFromFavorite(){
+    //remove data
+    private fun removeFromFavorite() {
+        when (type) {
+            TYPE_MOVIE -> {
+                favoriteViewModel.removeFavoriteMovieData(movieDetail!!)
+                isFavorite = true
+                setFavorite()
+            }
 
+            TYPE_TV ->  {
+                favoriteViewModel.removeFavoriteTvData(tvDetail!!)
+                isFavorite = true
+                setFavorite()
+            }
+        }
     }
-    private fun addToFavorite(){
 
+    //insert data
+    private fun addToFavorite() {
+        when (type) {
+            TYPE_MOVIE -> {
+                favoriteViewModel.insertFavoriteMovieData(movieDetail!!)
+                isFavorite = true
+                setFavorite()
+            }
+
+            TYPE_TV -> {
+                favoriteViewModel.insertFavoriteTvData(tvDetail!!)
+                isFavorite = true
+                setFavorite()
+            }
+        }
+    }
+
+    //check is favorite
+    private fun checkFavorite(data: String) {
+        when(type) {
+            TYPE_MOVIE -> {
+                favoriteViewModel.checkIsMovieFavorite(data)?.observe(this, Observer { dataLiveData ->
+                    if (dataLiveData != null) {
+                        isFavorite = true
+                        setFavorite()
+                    }
+                })
+            }
+
+            TYPE_TV -> {
+                favoriteViewModel.checkIsTvFavorite(data)?.observe(this, Observer { dataLiveData ->
+                    if (dataLiveData != null) {
+                        isFavorite = true
+                        setFavorite()
+                    }
+                })
+            }
+        }
     }
 
 }

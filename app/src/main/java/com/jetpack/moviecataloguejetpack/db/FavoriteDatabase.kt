@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.jetpack.moviecataloguejetpack.model.entity.MovieModel
-import com.jetpack.moviecataloguejetpack.model.entity.TvModel
+import com.jetpack.moviecataloguejetpack.model.entity.movie.FavoriteMovie
+import com.jetpack.moviecataloguejetpack.model.entity.tv.FavoriteTv
 
-@Database(entities = [MovieModel::class, TvModel::class], version = 1, exportSchema = false)
+@Database(entities = [FavoriteMovie::class, FavoriteTv::class], version = 1, exportSchema = false)
 abstract class FavoriteDatabase : RoomDatabase() {
 
     abstract fun favoriteDao() : FavoriteDao

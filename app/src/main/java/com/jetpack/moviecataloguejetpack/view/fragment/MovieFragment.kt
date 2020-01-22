@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jetpack.moviecataloguejetpack.R
 import com.jetpack.moviecataloguejetpack.adapter.MovieAdapter
-import com.jetpack.moviecataloguejetpack.model.entity.MovieModel
+import com.jetpack.moviecataloguejetpack.model.entity.movie.MovieModel
 import com.jetpack.moviecataloguejetpack.utils.EspressoIdleResource
 import com.jetpack.moviecataloguejetpack.utils.invisible
 import com.jetpack.moviecataloguejetpack.utils.visible
